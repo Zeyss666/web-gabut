@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialPoster — TikTok · Instagram · Facebook</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <!-- ============ LOGIN / REGISTER ============ -->
+  <div id="authScreen" class="screen">
+    <div class="card auth-card">
+      <h1>📤 SocialPoster</h1>
+      <p class="muted">Posting & jadwalkan video ke TikTok, Instagram, dan Facebook.</p>
+      <div class="tabs">
+        <button id="tabLogin" class="tab active">Login</button>
+        <button id="tabRegister" class="tab">Register</button>
+      </div>
+      <form id="authForm">
+        <input id="authEmail" type="email" placeholder="Email" required />
+        <input id="authUsername" type="text" placeholder="Username" class="hidden" />
+        <input id="authPassword" type="password" placeholder="Password" required />
+        <button type="submit" id="authSubmit">Login</button>
+      </form>
+      <div id="authError" class="error hidden"></div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div id="dashboard" class="screen hidden">
+    <header>
+      <h1>📤 SocialPoster</h1>
+      <div class="userbox">
+        <span id="usernameEl"></span>
+        <button id="logoutBtn" class="ghost">Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- 1. Connect -->
+      <section class="card">
+        <h2>1️⃣ Hubungkan Akun</h2>
+        <div class="connect-row">
+          <button class="connect-btn" data-platform="meta">🔗 Instagram &amp; Facebook</button>
+          <button class="connect-btn" data-platform="tiktok">🔗 TikTok</button>
+        </div>
+        <div id="connectMsg" class="muted hidden"></div>
+        <div id="accountsList" class="accounts"></div>
+      </section>
+
+      <!-- 2. Create -->
+      <section class="card">
+        <h2>2️⃣ Buat Postingan</h2>
+        <form id="postForm">
+          <div class="grid">
+            <label>Platform
+              <select id="platform">
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </label>
+            <label>Akun
+              <select id="account"><option value="">— pilih akun —</option></select>
+            </label>
+            <label>Format
+              <select id="mediaType">
+                <option value="post">Post / Video biasa</option>
+                <option value="reel">Reels</option>
+                <option value="story">Story</option>
+                <option value="photo">Foto</option>
+              </select>
+            </label>
+          </div>
+
+          <label>Caption (tulis @mention / #hashtag di sini)
+            <textarea id="caption" rows="2" placeholder="Caption..."></textarea>
+          </label>
+
+          <div class="grid">
+            <label>Tag orang (pisahkan koma)
+              <input id="tags" type="text" placeholder="username1, username2" />
+            </label>
+            <label>Link produk / dagangan
+              <input id="productLink" type="text" placeholder="https://..." />
+            </label>
+            <label>Jadwal upload (opsional)
+              <input id="scheduleTime" type="datetime-local" />
+            </label>
+          </div>
+
+          <div class="inline">
+            <label class="check"><input id="draftCheck" type="checkbox" /> Simpan sebagai draft</label>
+          </div>
+
+          <div class="upload-box">
+            <label>Video (upload tunggal)
+              <input id="videoInput" type="file" accept="video/*,image/*" />
+            </label>
+            <label>Banyak video sekaligus (bulk)
+              <input id="bulkFiles" type="file" accept="video/*,image/*" multiple />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" id="postBtn" class="primary">🚀 Posting</button>
+            <button type="button" id="bulkBtn">📦 Upload Bulk</button>
+          </div>
+        </form>
+        <p id="postMsg" class="muted hidden"></p>
+        <p class="hint">
+          Catatan: TikTok via API hanya mendukung video biasa (story/tag/link dagangan
+          butuh approval khusus TikTok). Instagram story &amp; tag didukung untuk akun Business/Creator.
+        </p>
+      </section>
+
+      <!-- 3. Posts -->
+      <section class="card">
+        <h2>3️⃣ Daftar Postingan</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Platform</th><th>Format</th><th>Status</th><th>Caption</th>
+              <th>Jadwal</th><th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="postsTbody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============ ANALYTICS MODAL ============ -->
+  <div id="analyticsModal" class="modal hidden">
+    <div class="modal-card">
+      <button id="modalClose" class="ghost">✕ Tutup</button>
+      <h3>📊 Monitoring Postingan</h3>
+      <div id="analyticsContent"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
